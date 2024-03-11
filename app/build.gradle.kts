@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -50,6 +52,7 @@ android {
 }
 
 dependencies {
+    api(libs.timber)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -59,6 +62,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.hilt.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -70,5 +74,8 @@ dependencies {
     implementation(libs.bundles.orbit)
     implementation(libs.bundles.navigation)
     implementation(libs.coil.image)
+
+    kapt(libs.hilt.android.compiler)
+    kapt(libs.androidx.hilt.compiler)
 
 }
