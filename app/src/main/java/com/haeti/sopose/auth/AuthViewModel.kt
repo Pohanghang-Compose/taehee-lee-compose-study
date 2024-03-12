@@ -2,7 +2,6 @@ package com.haeti.sopose.auth
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -41,12 +40,17 @@ class AuthViewModel @Inject constructor() : ContainerHost<AuthState, AuthSideEff
     }
 
     fun login(id: String, password: String) = intent {
-        if (state.id == id && state.password == password) {
+        if (state.id == id && state.password == password && id.isNotEmpty() && password.isNotEmpty()) {
             postSideEffect(AuthSideEffect.LoginSuccess)
         } else {
             postSideEffect(AuthSideEffect.InvalidInputToast)
         }
     }
+
+    fun navigateToSignUp() = intent {
+        postSideEffect(AuthSideEffect.NavigateToSignUp)
+    }
+
 
 
 }

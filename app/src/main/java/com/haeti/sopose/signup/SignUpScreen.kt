@@ -26,18 +26,17 @@ import androidx.navigation.compose.rememberNavController
 import com.haeti.sopose.auth.AuthSideEffect
 import com.haeti.sopose.auth.AuthViewModel
 import com.haeti.sopose.common.components.TitleTextField
-import com.haeti.sopose.extensions.navigateSingleTopTo
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpScreen(
-    authViewModel: AuthViewModel = hiltViewModel()
+    authViewModel: AuthViewModel,
+    navController: NavController
 ) {
     val authState by authViewModel.collectAsState()
     val context = LocalContext.current
-    val navController = rememberNavController()
 
     Scaffold(
         topBar = {
@@ -99,7 +98,7 @@ fun SignUpScreen(
     authViewModel.collectSideEffect {
         when (it) {
             AuthSideEffect.SignUpSuccess -> {
-                navController.navigateSingleTopTo("login")
+                navController.navigate("login")
             }
             AuthSideEffect.InvalidInputToast -> {
                 // 이 토스트가 현재는 뜰 수가 없지만 그냥 만듦
@@ -115,5 +114,5 @@ fun SignUpScreen(
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 fun SignUpScreenPreview() {
-    SignUpScreen()
+    SignUpScreen(navController = rememberNavController(), authViewModel = hiltViewModel())
 }

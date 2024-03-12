@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.haeti.sopose.auth.AuthSideEffect
 import com.haeti.sopose.auth.AuthViewModel
@@ -32,15 +34,16 @@ import com.haeti.sopose.common.components.TitleTextField
 import com.haeti.sopose.extensions.navigateSingleTopTo
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
-    authViewModel: AuthViewModel = hiltViewModel()
+    authViewModel: AuthViewModel,
+    navController: NavController
 ) {
-    val authState by authViewModel.collectAsState()
+    val state by authViewModel.collectAsState()
     val context = LocalContext.current
-    val navController = rememberNavController()
 
     var id: String by rememberSaveable { mutableStateOf("") }
     var password: String by rememberSaveable { mutableStateOf("") }
@@ -71,7 +74,7 @@ fun LoginScreen(
                 title = "ID",
                 hint = "ID를 입력해주세요",
                 value = id,
-                onValueChange = { input -> id = input }
+                onValueChange = { input -> id = input },
             )
 
             TitleTextField(
@@ -85,14 +88,18 @@ fun LoginScreen(
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
-                onClick = { AuthSideEffect.NavigateToSignUp },
+                onClick = { authViewModel.navigateToSignUp() },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "회원가입 하기")
             }
 
             Button(
-                onClick = { authViewModel.login(id, password) },
+                onClick = {
+                    authViewModel.login(id, password)
+                    Timber.e("id: $id, password: $password")
+                    Timber.e("state id pw: ${state.id} ${state.password}")
+                          },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "로그인 하기")
@@ -104,11 +111,11 @@ fun LoginScreen(
     authViewModel.collectSideEffect {
         when (it) {
             AuthSideEffect.NavigateToSignUp -> {
-                navController.navigateSingleTopTo("signup")
+                navController.navigate("signup")
             }
             AuthSideEffect.LoginSuccess -> {
                 Toast.makeText(context, "로그인에 성공했습니다!", Toast.LENGTH_SHORT).show()
-                navController.navigateSingleTopTo("main")
+                navController.navigate("main")
             }
             AuthSideEffect.InvalidInputToast -> {
                 Toast.makeText(context, "정확한 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
@@ -124,5 +131,5 @@ fun LoginScreen(
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 fun LoginScreenPreview() {
-    LoginScreen()
+    LoginScreen(navController = rememberNavController(), authViewModel = hiltViewModel())
 }
