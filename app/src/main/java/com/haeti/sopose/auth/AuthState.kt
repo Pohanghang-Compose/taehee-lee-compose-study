@@ -5,5 +5,4 @@ data class AuthState (
     val password: String = "",
     val nickname: String = "",
     val isSignUpValid: Boolean = false,
-    val isLoginValid: Boolean = false,
 )
