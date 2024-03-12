@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,11 +22,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.haeti.sopose.R
+import com.haeti.sopose.auth.AuthViewModel
+import org.orbitmvi.orbit.compose.collectAsState
 
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    authViewModel: AuthViewModel
+) {
+    val authState by authViewModel.collectAsState()
+
     Scaffold {
         Column(
             modifier = Modifier
@@ -48,7 +56,7 @@ fun MainScreen() {
                 )
 
                 Text(
-                    text = "티뱃여우",
+                    text = authState.nickname,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(start = 10.dp)
                 )
@@ -72,7 +80,7 @@ fun MainScreen() {
             )
 
             Text(
-                text = "haeti",
+                text = authState.id,
                 style = MaterialTheme.typography.bodyMedium.copy(
                     color = Color.Gray
                 ),
@@ -85,5 +93,5 @@ fun MainScreen() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun MainScreenPreview() {
-    MainScreen()
+    MainScreen(authViewModel = hiltViewModel())
 }
