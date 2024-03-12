@@ -1,6 +1,7 @@
 package com.haeti.sopose.common.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -24,14 +25,14 @@ fun TitleTextField(
     onValueChange: (String) -> Unit,
 ) {
 
-    Column {
+    Column(modifier = modifier.fillMaxWidth()) {
         Text(
             text = title,
             style = MaterialTheme.typography.headlineSmall,
         )
 
         OutlinedTextField(
-            modifier = modifier.padding(top = 2.dp),
+            modifier = Modifier.padding(top = 2.dp).fillMaxWidth(),
             value = value,
             onValueChange = { onValueChange(value) },
             singleLine = true,
