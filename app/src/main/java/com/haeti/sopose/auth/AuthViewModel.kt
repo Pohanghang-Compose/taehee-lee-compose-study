@@ -32,27 +32,19 @@ class AuthViewModel @Inject constructor() : ContainerHost<AuthState, AuthSideEff
         }
     }
 
-    fun postSignUpData(id: String, password: String, nickname: String) {
-        intent {
-            reduce {
-                state.copy(
-                    id = id,
-                    password = password,
-                    nickname = nickname,
-                )
-            }
+    fun signUp() = intent {
+        if (!state.isSignUpValid) {
+            postSideEffect(AuthSideEffect.InvalidInputToast)
+        } else {
+            postSideEffect(AuthSideEffect.SignUpSuccess)
         }
     }
 
     fun login(id: String, password: String) = intent {
-        if (!state.isLoginValid) {
-            postSideEffect(AuthSideEffect.InvalidInputToast)
+        if (state.id == id && state.password == password) {
+            postSideEffect(AuthSideEffect.LoginSuccess)
         } else {
-            if (state.id == id && state.password == password) {
-                postSideEffect(AuthSideEffect.LoginSuccess)
-            } else {
-                postSideEffect(AuthSideEffect.LoginFail)
-            }
+            postSideEffect(AuthSideEffect.InvalidInputToast)
         }
     }
 
