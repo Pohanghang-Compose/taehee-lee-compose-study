@@ -32,9 +32,11 @@ fun TitleTextField(
         )
 
         OutlinedTextField(
-            modifier = Modifier.padding(top = 2.dp).fillMaxWidth(),
+            modifier = Modifier
+                .padding(top = 2.dp)
+                .fillMaxWidth(),
             value = value,
-            onValueChange = { onValueChange(value) },
+            onValueChange = onValueChange,
             singleLine = true,
             keyboardOptions = keyboardOptions,
             label = {
