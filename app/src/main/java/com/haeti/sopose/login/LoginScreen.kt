@@ -33,6 +33,7 @@ import androidx.navigation.compose.rememberNavController
 import com.haeti.sopose.auth.AuthSideEffect
 import com.haeti.sopose.auth.AuthViewModel
 import com.haeti.sopose.common.components.TitleTextField
+import com.haeti.sopose.extensions.addFocusCleaner
 import com.haeti.sopose.navigation.Screen
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -65,7 +66,8 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(20.dp)
-                .padding(it),
+                .padding(it)
+                .addFocusCleaner(focusManager),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
