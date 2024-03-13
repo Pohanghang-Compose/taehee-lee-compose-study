@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -19,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
@@ -51,7 +49,7 @@ fun SignUpScreen(
             CenterAlignedTopAppBar(title = {
                 Text(
                     text = "Sign Up",
-                    style = MaterialTheme.typography.headlineLarge
+                    style = MaterialTheme.typography.headlineLarge,
                 )
             })
         }
@@ -73,7 +71,6 @@ fun SignUpScreen(
                 value = authState.id,
                 onValueChange = { id -> authViewModel.updateId(id) },
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-                keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Next) })
             )
 
             TitleTextField(
@@ -83,7 +80,6 @@ fun SignUpScreen(
                 value = authState.password,
                 onValueChange = { password -> authViewModel.updatePassword(password) },
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next).copy(keyboardType = KeyboardType.Password),
-                keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Next) })
             )
 
             TitleTextField(
