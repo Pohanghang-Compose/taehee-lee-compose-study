@@ -1,4 +1,4 @@
-package com.haeti.sopose.main
+package com.haeti.sopose.mypage
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -23,18 +23,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.haeti.sopose.R
 import com.haeti.sopose.auth.AuthViewModel
+import com.haeti.sopose.navigation.BottomNavigationBar
 import org.orbitmvi.orbit.compose.collectAsState
 
 
 @Composable
-fun MainScreen(
+fun MypageScreen(
+    navController: NavController,
     authViewModel: AuthViewModel
 ) {
     val authState by authViewModel.collectAsState()
 
-    Scaffold {
+    Scaffold(
+        bottomBar = { BottomNavigationBar(navController = navController) }
+    ) {
         Column(
             modifier = Modifier
                 .padding(it)
@@ -93,5 +99,5 @@ fun MainScreen(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun MainScreenPreview() {
-    MainScreen(authViewModel = hiltViewModel())
+    MypageScreen(navController = rememberNavController(), authViewModel = hiltViewModel())
 }
