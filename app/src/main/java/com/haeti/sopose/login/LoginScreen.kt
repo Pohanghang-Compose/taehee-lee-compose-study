@@ -34,6 +34,7 @@ import com.haeti.sopose.auth.AuthSideEffect
 import com.haeti.sopose.auth.AuthViewModel
 import com.haeti.sopose.common.components.TitleTextField
 import com.haeti.sopose.extensions.addFocusCleaner
+import com.haeti.sopose.navigation.BottomNavItem
 import com.haeti.sopose.navigation.Screen
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -106,7 +107,7 @@ fun LoginScreen(
                     authViewModel.login(id, password)
                     Timber.e("id: $id, password: $password")
                     Timber.e("state id pw: ${state.id} ${state.password}")
-                          },
+                },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "로그인 하기")
@@ -120,10 +121,17 @@ fun LoginScreen(
             AuthSideEffect.NavigateToSignUp -> {
                 navController.navigate(Screen.SignUp.route)
             }
+
             AuthSideEffect.LoginSuccess -> {
                 Toast.makeText(context, "로그인에 성공했습니다!", Toast.LENGTH_SHORT).show()
-                navController.navigate(Screen.Main.route)
+                navController.navigate(BottomNavItem.Home.route) {
+                    popUpTo(navController.graph.startDestinationId) {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                }
             }
+
             AuthSideEffect.InvalidInputToast -> {
                 Toast.makeText(context, "정확한 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
             }

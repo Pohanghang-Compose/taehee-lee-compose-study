@@ -26,9 +26,6 @@ fun MainNavHost(
         composable(Screen.SignUp.route) {
             SignUpScreen(navController = navController, authViewModel = viewModel)
         }
-        composable(Screen.Main.route) {
-            HomeScreen(navController = navController)
-        }
         composable(BottomNavItem.Home.route) {
             HomeScreen(navController)
         }
