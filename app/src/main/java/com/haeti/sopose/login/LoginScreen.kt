@@ -34,7 +34,7 @@ import com.haeti.sopose.auth.AuthSideEffect
 import com.haeti.sopose.auth.AuthViewModel
 import com.haeti.sopose.common.components.TitleTextField
 import com.haeti.sopose.extensions.addFocusCleaner
-import com.haeti.sopose.navigation.BottomNavItem
+import com.haeti.sopose.navigation.NavGraph
 import com.haeti.sopose.navigation.Screen
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -124,7 +124,7 @@ fun LoginScreen(
 
             AuthSideEffect.LoginSuccess -> {
                 Toast.makeText(context, "로그인에 성공했습니다!", Toast.LENGTH_SHORT).show()
-                navController.navigate(BottomNavItem.Home.route) {
+                navController.navigate(NavGraph.Main.route) {
                     popUpTo(navController.graph.startDestinationId) {
                         inclusive = true
                     }
