@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -20,6 +21,7 @@ import androidx.navigation.navigation
 import com.haeti.sopose.android.AndroidScreen
 import com.haeti.sopose.auth.AuthViewModel
 import com.haeti.sopose.home.HomeScreen
+import com.haeti.sopose.home.HomeViewModel
 import com.haeti.sopose.login.LoginScreen
 import com.haeti.sopose.mypage.MypageScreen
 import com.haeti.sopose.signup.SignUpScreen
@@ -33,6 +35,7 @@ fun MainNavHost(
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+    val homeViewModel: HomeViewModel = hiltViewModel()
 
     Scaffold(
         topBar = {
@@ -72,7 +75,7 @@ fun MainNavHost(
                 authViewModel = viewModel,
                 modifier = Modifier.padding(it)
             )
-            mainGraph(authViewModel = viewModel)
+            mainGraph(authViewModel = viewModel, homeViewModel)
         }
     }
 
@@ -101,13 +104,13 @@ fun NavGraphBuilder.authGraph(
     }
 }
 
-fun NavGraphBuilder.mainGraph(authViewModel: AuthViewModel) {
+fun NavGraphBuilder.mainGraph(authViewModel: AuthViewModel, homeViewModel: HomeViewModel) {
     navigation(startDestination = BottomNavItem.Home.route, route = NavGraph.Main.route) {
         composable(BottomNavItem.Home.route) {
-            HomeScreen()
+            HomeScreen(homeViewModel)
         }
         composable(BottomNavItem.MyPage.route) {
-            MypageScreen(authViewModel = authViewModel)
+            MypageScreen(authViewModel)
         }
         composable(BottomNavItem.Android.route) {
             AndroidScreen()
