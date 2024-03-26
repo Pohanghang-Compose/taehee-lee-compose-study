@@ -9,10 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,71 +36,58 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun SignUpScreen(
     authViewModel: AuthViewModel,
-    navController: NavController
+    navController: NavController,
+    modifier: Modifier = Modifier,
 ) {
     val authState by authViewModel.collectAsState()
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
 
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(title = {
-                Text(
-                    text = "Sign Up",
-                    style = MaterialTheme.typography.headlineLarge,
-                )
-            })
-        }
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(20.dp)
+            .addFocusCleaner(focusManager),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(20.dp)
-                .padding(it)
-                .addFocusCleaner(focusManager)
-            ,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+
+        TitleTextField(
+            modifier = Modifier.fillMaxWidth(),
+            title = "ID",
+            hint = "ID를 입력해주세요",
+            value = authState.id,
+            onValueChange = { id -> authViewModel.updateId(id) },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        )
+
+        TitleTextField(
+            modifier = Modifier.fillMaxWidth(),
+            title = "PW",
+            hint = "비밀번호를 입력해주세요",
+            value = authState.password,
+            onValueChange = { password -> authViewModel.updatePassword(password) },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next).copy(keyboardType = KeyboardType.Password),
+        )
+
+        TitleTextField(
+            modifier = Modifier.fillMaxWidth(),
+            title = "닉네임",
+            hint = "닉네임을 입력해주세요",
+            value = authState.nickname,
+            onValueChange = { nickname -> authViewModel.updateNickname(nickname) }
+        )
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Button(
+            onClick = { authViewModel.signUp() },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = authState.isSignUpValid
         ) {
-
-
-            TitleTextField(
-                modifier = Modifier.fillMaxWidth(),
-                title = "ID",
-                hint = "ID를 입력해주세요",
-                value = authState.id,
-                onValueChange = { id -> authViewModel.updateId(id) },
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            )
-
-            TitleTextField(
-                modifier = Modifier.fillMaxWidth(),
-                title = "PW",
-                hint = "비밀번호를 입력해주세요",
-                value = authState.password,
-                onValueChange = { password -> authViewModel.updatePassword(password) },
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next).copy(keyboardType = KeyboardType.Password),
-            )
-
-            TitleTextField(
-                modifier = Modifier.fillMaxWidth(),
-                title = "닉네임",
-                hint = "닉네임을 입력해주세요",
-                value = authState.nickname,
-                onValueChange = { nickname -> authViewModel.updateNickname(nickname) }
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            Button(
-                onClick = { authViewModel.signUp() },
-                modifier = Modifier.fillMaxWidth(),
-                enabled = authState.isSignUpValid
-            ) {
-                Text(text = "회원가입 하기")
-            }
-
+            Text(text = "회원가입 하기")
         }
+
     }
 
     authViewModel.collectSideEffect {
@@ -111,10 +95,12 @@ fun SignUpScreen(
             AuthSideEffect.SignUpSuccess -> {
                 navController.navigate(Screen.Login.route)
             }
+
             AuthSideEffect.InvalidInputToast -> {
                 // 이 토스트가 현재는 뜰 수가 없지만 그냥 만듦
                 Toast.makeText(context, "모든 값을 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
+
             else -> {
                 // do nothing
             }

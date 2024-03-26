@@ -1,9 +1,7 @@
 package com.haeti.sopose.home
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
@@ -11,15 +9,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.haeti.sopose.R
 import com.haeti.sopose.common.profile.BirthdayProfile
 import com.haeti.sopose.common.profile.FriendProfile
 import com.haeti.sopose.common.profile.MusicProfile
 import com.haeti.sopose.common.profile.MyProfile
 import com.haeti.sopose.extensions.VerticalSpacer
-import com.haeti.sopose.navigation.BottomNavigationBar
 
 val friendTypeSaver: Saver<List<FriendType>, *> = Saver(
     save = { list ->
@@ -57,9 +52,7 @@ val friendTypeSaver: Saver<List<FriendType>, *> = Saver(
 
 
 @Composable
-fun HomeScreen(
-    navController: NavController
-) {
+fun HomeScreen() {
     val friendList = rememberSaveable(stateSaver = friendTypeSaver) {
         mutableStateOf(
             listOf(
@@ -95,45 +88,41 @@ fun HomeScreen(
         )
     }
 
-    Scaffold(
-        bottomBar = { BottomNavigationBar(navController = navController) }
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-        ) {
-            item {
-                MyProfile()
-                VerticalSpacer(height = 8.dp)
-            }
+        item {
+            MyProfile()
+            VerticalSpacer(height = 8.dp)
+        }
 
-            items(friendList.value.size) { index ->
-                when (val friend = friendList.value[index]) {
-                    is FriendType.BirthdayFriend -> BirthdayProfile(
-                        birthday = friend.birthday,
-                        image = friend.psa,
-                        name = friend.name
-                    )
+        items(friendList.value.size) { index ->
+            when (val friend = friendList.value[index]) {
+                is FriendType.BirthdayFriend -> BirthdayProfile(
+                    birthday = friend.birthday,
+                    image = friend.psa,
+                    name = friend.name
+                )
 
-                    is FriendType.Friend -> FriendProfile(
-                        image = friend.psa,
-                        name = friend.name
-                    )
+                is FriendType.Friend -> FriendProfile(
+                    image = friend.psa,
+                    name = friend.name
+                )
 
-                    is FriendType.MusicianFriend -> MusicProfile(
-                        image = friend.psa,
-                        name = friend.name,
-                        music = friend.music
-                    )
-                }
+                is FriendType.MusicianFriend -> MusicProfile(
+                    image = friend.psa,
+                    name = friend.name,
+                    music = friend.music
+                )
             }
         }
     }
+
 }
 
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 fun HomeScreenPreview() {
-    HomeScreen(navController = rememberNavController())
+    HomeScreen()
 }
