@@ -1,20 +1,26 @@
 package com.haeti.sopose.home
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.haeti.sopose.R
 import com.haeti.sopose.common.profile.BirthdayProfile
 import com.haeti.sopose.common.profile.FriendProfile
 import com.haeti.sopose.common.profile.MusicProfile
 import com.haeti.sopose.common.profile.MyProfile
 import com.haeti.sopose.extensions.VerticalSpacer
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 val friendTypeSaver: Saver<List<FriendType>, *> = Saver(
     save = { list ->
@@ -52,7 +58,9 @@ val friendTypeSaver: Saver<List<FriendType>, *> = Saver(
 
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(homeViewModel: HomeViewModel) {
+    val context = LocalContext.current
+    val homeState by homeViewModel.collectAsState()
     val friendList = rememberSaveable(stateSaver = friendTypeSaver) {
         mutableStateOf(
             listOf(
@@ -93,7 +101,10 @@ fun HomeScreen() {
             .fillMaxSize()
     ) {
         item {
-            MyProfile()
+            MyProfile(
+                currentName = homeState.name,
+                onNameChange = homeViewModel::updateName
+            )
             VerticalSpacer(height = 8.dp)
         }
 
@@ -119,10 +130,17 @@ fun HomeScreen() {
         }
     }
 
+    homeViewModel.collectSideEffect {
+        when (it) {
+            is HomeSideEffect.NameChangeToast -> {
+                Toast.makeText(context, "이름이 변경 되었습니다!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 }
 
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen(homeViewModel = hiltViewModel())
 }
