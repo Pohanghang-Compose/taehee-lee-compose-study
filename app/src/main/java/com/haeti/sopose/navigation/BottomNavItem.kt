@@ -25,3 +25,7 @@ sealed class BottomNavItem(
         val items = listOf(Android, Home, MyPage)
     }
 }
+
+fun BottomNavItem.Companion.isInBottomNav(route: String?): Boolean {
+    return route?.let { items.any { it.route == route } } ?: false
+}

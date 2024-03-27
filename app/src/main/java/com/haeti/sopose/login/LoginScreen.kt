@@ -9,10 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,7 +31,7 @@ import com.haeti.sopose.auth.AuthSideEffect
 import com.haeti.sopose.auth.AuthViewModel
 import com.haeti.sopose.common.components.TitleTextField
 import com.haeti.sopose.extensions.addFocusCleaner
-import com.haeti.sopose.navigation.BottomNavItem
+import com.haeti.sopose.navigation.NavGraph
 import com.haeti.sopose.navigation.Screen
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -44,7 +41,8 @@ import timber.log.Timber
 @Composable
 fun LoginScreen(
     authViewModel: AuthViewModel,
-    navController: NavController
+    navController: NavController,
+    modifier: Modifier = Modifier,
 ) {
     val state by authViewModel.collectAsState()
     val context = LocalContext.current
@@ -53,67 +51,56 @@ fun LoginScreen(
     var id: String by rememberSaveable { mutableStateOf("") }
     var password: String by rememberSaveable { mutableStateOf("") }
 
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(title = {
-                Text(
-                    text = "Welcome to Sopose",
-                    style = MaterialTheme.typography.headlineLarge
-                )
-            })
-        }
+
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(20.dp)
+            .addFocusCleaner(focusManager),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(20.dp)
-                .padding(it)
-                .addFocusCleaner(focusManager),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+
+        Spacer(modifier = Modifier.weight(0.3f))
+
+        TitleTextField(
+            modifier = Modifier.fillMaxWidth(),
+            title = "ID",
+            hint = "ID를 입력해주세요",
+            value = id,
+            onValueChange = { input -> id = input },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        )
+
+        TitleTextField(
+            modifier = Modifier.fillMaxWidth(),
+            title = "PW",
+            hint = "비밀번호를 입력해주세요",
+            value = password,
+            onValueChange = { input -> password = input },
+            keyboardType = KeyboardType.Password
+        )
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Button(
+            onClick = { authViewModel.navigateToSignUp() },
+            modifier = Modifier.fillMaxWidth()
         ) {
-
-            Spacer(modifier = Modifier.weight(0.3f))
-
-            TitleTextField(
-                modifier = Modifier.fillMaxWidth(),
-                title = "ID",
-                hint = "ID를 입력해주세요",
-                value = id,
-                onValueChange = { input -> id = input },
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            )
-
-            TitleTextField(
-                modifier = Modifier.fillMaxWidth(),
-                title = "PW",
-                hint = "비밀번호를 입력해주세요",
-                value = password,
-                onValueChange = { input -> password = input },
-                keyboardType = KeyboardType.Password
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            Button(
-                onClick = { authViewModel.navigateToSignUp() },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(text = "회원가입 하기")
-            }
-
-            Button(
-                onClick = {
-                    authViewModel.login(id, password)
-                    Timber.e("id: $id, password: $password")
-                    Timber.e("state id pw: ${state.id} ${state.password}")
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(text = "로그인 하기")
-            }
-
+            Text(text = "회원가입 하기")
         }
+
+        Button(
+            onClick = {
+                authViewModel.login(id, password)
+                Timber.e("id: $id, password: $password")
+                Timber.e("state id pw: ${state.id} ${state.password}")
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "로그인 하기")
+        }
+
     }
 
     authViewModel.collectSideEffect {
@@ -124,7 +111,7 @@ fun LoginScreen(
 
             AuthSideEffect.LoginSuccess -> {
                 Toast.makeText(context, "로그인에 성공했습니다!", Toast.LENGTH_SHORT).show()
-                navController.navigate(BottomNavItem.Home.route) {
+                navController.navigate(NavGraph.Main.route) {
                     popUpTo(navController.graph.startDestinationId) {
                         inclusive = true
                     }
