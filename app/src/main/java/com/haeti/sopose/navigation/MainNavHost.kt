@@ -1,6 +1,5 @@
 package com.haeti.sopose.navigation
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,7 +26,6 @@ import com.haeti.sopose.mypage.MypageScreen
 import com.haeti.sopose.signup.SignUpScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainNavHost(
     navController: NavHostController,
@@ -68,14 +66,14 @@ fun MainNavHost(
 
         NavHost(
             navController = navController,
-            startDestination = NavGraph.Auth.route
+            startDestination = NavGraph.Main.route
         ) {
             authGraph(
                 navController = navController,
                 authViewModel = viewModel,
                 modifier = Modifier.padding(it)
             )
-            mainGraph(authViewModel = viewModel, homeViewModel)
+            mainGraph(authViewModel = viewModel, homeViewModel = homeViewModel)
         }
     }
 

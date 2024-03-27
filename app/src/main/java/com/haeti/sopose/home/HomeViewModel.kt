@@ -8,6 +8,7 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,13 +21,15 @@ class HomeViewModel @Inject constructor(
         savedStateHandle.get<String>("name")?.let { name ->
             updateName(name)
         }
+        Timber.e("get savedStateHandle: ${savedStateHandle.get<String>("name")}")
     }
 
     fun updateName(name: String) = intent {
         savedStateHandle["name"] = name
+        Timber.e("set savedStateHandle: ${savedStateHandle.get<String>("name")}")
         reduce {
             state.copy(name = name)
         }
-        postSideEffect(HomeSideEffect.NameChangeToast)
+        postSideEffect(HomeSideEffect.NameChangeToast(message = "이름이 변경되었습니다"))
     }
 }

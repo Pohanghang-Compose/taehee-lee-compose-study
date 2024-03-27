@@ -133,7 +133,7 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
     homeViewModel.collectSideEffect {
         when (it) {
             is HomeSideEffect.NameChangeToast -> {
-                Toast.makeText(context, "이름이 변경 되었습니다!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
             }
         }
     }
