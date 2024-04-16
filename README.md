@@ -11,3 +11,12 @@ https://github.com/Pohanghang-Compose/taehee-lee-compose-study/assets/98825364/c
 - Saver & rememberSaveable을 통해 데이터 안전하게 관리하기
 - LazyColumn + MultiViewType
 
+## 3주차 구현 시연 영상
+
+
+https://github.com/Pohanghang-Compose/taehee-lee-compose-study/assets/98825364/0dbec8e3-adf0-49fc-8437-246951b900c7
+
+- Material3 AlertDialog 사용
+- NavGraph를 분리하여 독립적으로 관리하기
+- savedStateHandle을 사용하여 데이터 안전하게 보관하기 
+
