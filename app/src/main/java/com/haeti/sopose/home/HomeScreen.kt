@@ -14,11 +14,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.haeti.sopose.R
+import com.haeti.sopose.common.extensions.VerticalSpacer
 import com.haeti.sopose.common.profile.BirthdayProfile
 import com.haeti.sopose.common.profile.FriendProfile
 import com.haeti.sopose.common.profile.MusicProfile
 import com.haeti.sopose.common.profile.MyProfile
-import com.haeti.sopose.extensions.VerticalSpacer
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 

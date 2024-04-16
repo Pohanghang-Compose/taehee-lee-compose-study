@@ -21,8 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.haeti.sopose.common.components.ProfileImage
-import com.haeti.sopose.extensions.HorizontalSpacer
-import com.haeti.sopose.extensions.VerticalSpacer
+import com.haeti.sopose.common.extensions.HorizontalSpacer
+import com.haeti.sopose.common.extensions.VerticalSpacer
 
 @Composable
 fun MyProfile(
