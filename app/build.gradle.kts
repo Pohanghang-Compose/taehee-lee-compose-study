@@ -77,6 +77,11 @@ dependencies {
     implementation(libs.bundles.navigation)
     implementation(libs.coil.image)
 
+    implementation(libs.landscapist.animation)
+    implementation(libs.landscapist.glide)
+    implementation(libs.landscapist.palette)
+    implementation(libs.landscapist.placeholder)
+
     kapt(libs.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
