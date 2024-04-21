@@ -102,7 +102,7 @@ fun PokemonProfile(
 
 @Preview
 @Composable
-fun CatProfilePreview() {
+fun PokemonProfilePreview() {
     PokemonProfile(
         Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
     )
