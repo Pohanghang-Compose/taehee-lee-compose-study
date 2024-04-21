@@ -38,7 +38,7 @@ fun AndroidScreen() {
 
         is UiState.Success -> {
             val pokemonList = uiState.data
-            CatContents(pokemonList = pokemonList)
+            PokemonContents(pokemonList = pokemonList)
         }
 
         is UiState.Failure -> {
@@ -57,7 +57,7 @@ fun AndroidScreen() {
 }
 
 @Composable
-fun CatContents(
+fun PokemonContents(
     pokemonList: List<Pokemon>,
 ) {
     Column(
@@ -89,8 +89,8 @@ fun CatContents(
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun CatContentPreview() {
-    CatContents(
+fun PokemonContentPreview() {
+    PokemonContents(
         pokemonList =
         listOf(
             Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
