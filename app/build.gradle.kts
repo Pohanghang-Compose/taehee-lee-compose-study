@@ -82,6 +82,8 @@ dependencies {
     implementation(libs.landscapist.palette)
     implementation(libs.landscapist.placeholder)
 
+    implementation(libs.serialization)
+
     kapt(libs.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
