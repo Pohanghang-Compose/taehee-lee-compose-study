@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.haeti.sopose.R
 import com.haeti.sopose.android.paletteBackgroundColor
 import com.haeti.sopose.common.extensions.VerticalSpacer
-import com.haeti.sopose.domain.Cat
+import com.haeti.sopose.domain.model.Pokemon
 import com.kmpalette.palette.graphics.Palette
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.animation.crossfade.CrossfadePlugin
@@ -38,8 +38,8 @@ import com.skydoves.landscapist.placeholder.shimmer.Shimmer
 import com.skydoves.landscapist.placeholder.shimmer.ShimmerPlugin
 
 @Composable
-fun CatProfile(
-    cat: Cat
+fun PokemonProfile(
+    pokemon: Pokemon
 ) {
     var palette by remember { mutableStateOf<Palette?>(null) }
     val backgroundColor by palette.paletteBackgroundColor()
@@ -62,7 +62,7 @@ fun CatProfile(
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 20.dp)
                 .size(100.dp),
-            imageModel = { cat.image },
+            imageModel = { pokemon.image },
             imageOptions = ImageOptions(contentScale = ContentScale.Inside),
             component = rememberImageComponent {
                 +CrossfadePlugin()
@@ -75,7 +75,7 @@ fun CatProfile(
 
                 if (!LocalInspectionMode.current) {
                     +PalettePlugin(
-                        imageModel = cat.image,
+                        imageModel = pokemon.image,
                         useCache = true,
                         paletteLoadedListener = { palette = it }
                     )
@@ -89,22 +89,21 @@ fun CatProfile(
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth()
                 .padding(12.dp),
-            text = cat.name,
+            text = pokemon.name,
             color = Color.Black,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp
         )
         VerticalSpacer(height = 8.dp)
-
     }
-
 }
+
 
 @Preview
 @Composable
 fun CatProfilePreview() {
-    CatProfile(
-        Cat("Persian", image = "https://fakeimg.pl/500x500/cc5500")
+    PokemonProfile(
+        Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
     )
 }

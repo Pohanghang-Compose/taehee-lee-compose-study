@@ -1,5 +1,5 @@
 package com.haeti.sopose.android
 
-sealed class CatSideEffect {
+sealed class PokemonSideEffect {
 
 }
