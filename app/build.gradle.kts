@@ -86,7 +86,6 @@ dependencies {
     implementation(libs.serialization)
     implementation(libs.retrofit)
     implementation(libs.kotlinx.serialization)
-    implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
 
