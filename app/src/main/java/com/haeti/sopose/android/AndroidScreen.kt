@@ -15,25 +15,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.haeti.sopose.common.components.CatProfile
+import com.haeti.sopose.common.components.PokemonProfile
 import com.haeti.sopose.common.extensions.VerticalSpacer
 import com.haeti.sopose.common.util.UiState
-import com.haeti.sopose.domain.Cat
+import com.haeti.sopose.domain.model.Pokemon
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
-fun AndroidScreen(
-    viewModel: AndroidScreenViewModel = hiltViewModel()
-) {
+fun AndroidScreen() {
+    val viewModel: AndroidScreenViewModel = hiltViewModel()
     val state by viewModel.collectAsState()
+
     when (val uiState = state.uiState) {
         is UiState.Loading -> {
             // Loading
         }
 
         is UiState.Success -> {
-            val catList = uiState.data
-            CatContents(catList = catList)
+            val pokemonList = uiState.data
+            CatContents(pokemonList = pokemonList)
         }
 
         is UiState.Failure -> {
@@ -44,7 +44,7 @@ fun AndroidScreen(
 
 @Composable
 fun CatContents(
-    catList: List<Cat>,
+    pokemonList: List<Pokemon>,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -53,7 +53,7 @@ fun CatContents(
         VerticalSpacer(height = 20.dp)
 
         Text(
-            text = "고양이들",
+            text = "포켓몬 도감",
             style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
         )
 
@@ -65,8 +65,8 @@ fun CatContents(
                 columns = GridCells.Fixed(3),
                 contentPadding = PaddingValues(6.dp)
             ) {
-                items(catList.size) { index ->
-                    CatProfile(cat = catList[index])
+                items(pokemonList.size) { index ->
+                    PokemonProfile(pokemon = pokemonList[index])
                 }
             }
         }
@@ -77,18 +77,25 @@ fun CatContents(
 @Composable
 fun CatContentPreview() {
     CatContents(
-        catList =
+        pokemonList =
         listOf(
-            Cat("Persian", image = "https://fakeimg.pl/500x500/cc5500"),
-            Cat("Persian", image = "https://fakeimg.pl/500x500/cc5500"),
-            Cat("Persian", image = "https://fakeimg.pl/500x500/cc5500"),
-            Cat("Persian", image = "https://fakeimg.pl/500x500/cc5500"),
-            Cat("Persian", image = "https://fakeimg.pl/500x500/cc5500"),
-            Cat("Persian", image = "https://fakeimg.pl/500x500/cc5500"),
-            Cat("Persian", image = "https://fakeimg.pl/500x500/cc5500"),
-            Cat("Persian", image = "https://fakeimg.pl/500x500/cc5500"),
-            Cat("Persian", image = "https://fakeimg.pl/500x500/cc5500"),
-            Cat("Persian", image = "https://fakeimg.pl/500x500/cc5500"),
+            Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
+            Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
+            Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
+            Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
+            Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
+            Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
+            Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
+            Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
+            Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
+            Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
+            Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
+            Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
+            Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
+            Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
+            Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
+            Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
+            Pokemon("피카츄", "https://pokeapi.co/api/v2/pokemon/25/"),
         ),
     )
 }
