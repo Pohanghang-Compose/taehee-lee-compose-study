@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -37,6 +38,7 @@ class AndroidScreenViewModel @Inject constructor(
                 reduce {
                     state.copy(uiState = UiState.Success(pokemonList))
                 }
+                postSideEffect(PokemonSideEffect.ShowToast("포켓몬 정보를 불러왔습니다!"))
             }
         }
     }

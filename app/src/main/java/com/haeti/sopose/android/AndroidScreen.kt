@@ -1,5 +1,6 @@
 package com.haeti.sopose.android
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,24 +12,28 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.haeti.sopose.common.components.LoadingScreen
 import com.haeti.sopose.common.components.PokemonProfile
 import com.haeti.sopose.common.extensions.VerticalSpacer
 import com.haeti.sopose.common.util.UiState
 import com.haeti.sopose.domain.model.Pokemon
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun AndroidScreen() {
     val viewModel: AndroidScreenViewModel = hiltViewModel()
     val state by viewModel.collectAsState()
+    val context = LocalContext.current
 
     when (val uiState = state.uiState) {
         is UiState.Loading -> {
-            // Loading
+            LoadingScreen()
         }
 
         is UiState.Success -> {
@@ -39,6 +44,15 @@ fun AndroidScreen() {
         is UiState.Failure -> {
             // Error
         }
+    }
+
+    viewModel.collectSideEffect {
+        when (it) {
+            is PokemonSideEffect.ShowToast -> {
+                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 }
 
