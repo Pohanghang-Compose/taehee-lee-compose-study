@@ -18,6 +18,9 @@ hiltNavigationCompose = "1.2.0"
 gradle = "8.3.0"
 timber = "5.0.1"
 serialization = "1.6.0"
+retrofit = "2.11.0"
+kotlinx-serialization-converter = "1.0.0"
+okhttp-bom = "4.10.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -59,12 +62,18 @@ landscapist-placeholder = { group = "com.github.skydoves", name = "landscapist-p
 landscapist-palette = { group = "com.github.skydoves", name = "landscapist-palette", version.ref = "landscapist" }
 
 serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+kotlinx-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "kotlinx-serialization-converter" }
+okhttp-bom = { group = "com.squareup.okhttp3", name = "okhttp-bom", version.ref = "okhttp-bom" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp" }
+logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
 
 [bundles]
 orbit = ["orbit-core", "orbit-viewmodel", "orbit-compose", "orbit-test"]
