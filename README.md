@@ -20,3 +20,12 @@ https://github.com/Pohanghang-Compose/taehee-lee-compose-study/assets/98825364/0
 - NavGraph를 분리하여 독립적으로 관리하기
 - savedStateHandle을 사용하여 데이터 안전하게 보관하기 
 
+## 4주차 구현 시연 영상
+
+
+https://github.com/Pohanghang-Compose/taehee-lee-compose-study/assets/98825364/f96705b4-eaa5-4e40-acec-860ec07f4bc2
+
+- [pokeAPI](https://pokeapi.co/) 연결
+- [landscapist](https://github.com/skydoves/landscapist) 라이브러리를 활용해 스켈레톤, palette, 애니메이션 처리
+- UiState를 활용해 성공 시 데이터 전달
+- LazyVerticalGrid 활용
