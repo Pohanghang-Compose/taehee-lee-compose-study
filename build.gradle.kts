@@ -18,4 +18,5 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid) apply false
     alias(libs.plugins.kotlin.kapt) apply false
     alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.serialization) apply false
 }

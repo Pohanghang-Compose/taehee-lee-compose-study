@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.serialization)
 }
 
 android {
@@ -76,6 +77,17 @@ dependencies {
     implementation(libs.bundles.orbit)
     implementation(libs.bundles.navigation)
     implementation(libs.coil.image)
+
+    implementation(libs.landscapist.animation)
+    implementation(libs.landscapist.glide)
+    implementation(libs.landscapist.palette)
+    implementation(libs.landscapist.placeholder)
+
+    implementation(libs.serialization)
+    implementation(libs.retrofit)
+    implementation(libs.kotlinx.serialization)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
 
     kapt(libs.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)

@@ -1,4 +1,4 @@
-package com.haeti.sopose.extensions
+package com.haeti.sopose.common.extensions
 
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.ui.Modifier

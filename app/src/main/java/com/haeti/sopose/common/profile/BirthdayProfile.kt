@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.haeti.sopose.R
 import com.haeti.sopose.common.components.BirthdayCard
 import com.haeti.sopose.common.components.ProfileImage
-import com.haeti.sopose.extensions.HorizontalSpacer
+import com.haeti.sopose.common.extensions.HorizontalSpacer
 
 @Composable
 fun BirthdayProfile(

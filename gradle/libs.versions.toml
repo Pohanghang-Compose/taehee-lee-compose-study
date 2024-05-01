@@ -11,12 +11,17 @@ composeBom = "2023.08.00"
 orbitMVI = "4.4.0"
 navigationAlpha = "2.4.0-alpha10"
 navigation = "2.7.7"
-coil = "2.3.2"
+landscapist = "2.3.3"
 hilt = "2.48"
 hiltCompiler = "1.1.0"
 hiltNavigationCompose = "1.2.0"
 gradle = "8.3.0"
 timber = "5.0.1"
+serialization = "1.6.0"
+retrofit = "2.11.0"
+kotlinx-serialization-converter = "1.0.0"
+okhttp = "4.12.0"
+logging-interceptor = "4.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -43,20 +48,32 @@ android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref 
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
-orbit-core = {group = "org.orbit-mvi", name = "orbit-core", version.ref = "orbitMVI"}
-orbit-viewmodel = {group = "org.orbit-mvi", name = "orbit-viewmodel", version.ref = "orbitMVI"}
-orbit-compose = {group = "org.orbit-mvi", name = "orbit-compose", version.ref = "orbitMVI"}
-orbit-test = {group = "org.orbit-mvi", name = "orbit-test", version.ref = "orbitMVI"}
-navigation-compose = {group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationAlpha"}
-navigation-common-ktx = {group = "androidx.navigation", name = "navigation-common-ktx", version.ref = "navigation"}
-navigation-runtime-ktx = {group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigation"}
-coil-image = {group = "com.github.skydoves", name = "landscapist-coil", version.ref = "coil"}
+orbit-core = { group = "org.orbit-mvi", name = "orbit-core", version.ref = "orbitMVI" }
+orbit-viewmodel = { group = "org.orbit-mvi", name = "orbit-viewmodel", version.ref = "orbitMVI" }
+orbit-compose = { group = "org.orbit-mvi", name = "orbit-compose", version.ref = "orbitMVI" }
+orbit-test = { group = "org.orbit-mvi", name = "orbit-test", version.ref = "orbitMVI" }
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationAlpha" }
+navigation-common-ktx = { group = "androidx.navigation", name = "navigation-common-ktx", version.ref = "navigation" }
+navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigation" }
+
+coil-image = { group = "com.github.skydoves", name = "landscapist-coil", version.ref = "landscapist" }
+landscapist-glide = { group = "com.github.skydoves", name = "landscapist-glide", version.ref = "landscapist" }
+landscapist-animation = { group = "com.github.skydoves", name = "landscapist-animation", version.ref = "landscapist" }
+landscapist-placeholder = { group = "com.github.skydoves", name = "landscapist-placeholder", version.ref = "landscapist" }
+landscapist-palette = { group = "com.github.skydoves", name = "landscapist-palette", version.ref = "landscapist" }
+
+serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+kotlinx-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "kotlinx-serialization-converter" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logging-interceptor" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
 
 [bundles]
 orbit = ["orbit-core", "orbit-viewmodel", "orbit-compose", "orbit-test"]

@@ -1,4 +1,4 @@
-package com.haeti.sopose.extensions
+package com.haeti.sopose.common.extensions
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height

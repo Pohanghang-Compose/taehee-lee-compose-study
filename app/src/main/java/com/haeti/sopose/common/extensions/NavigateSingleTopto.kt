@@ -1,4 +1,4 @@
-package com.haeti.sopose.extensions
+package com.haeti.sopose.common.extensions
 
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController

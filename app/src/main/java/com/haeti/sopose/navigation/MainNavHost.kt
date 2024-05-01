@@ -18,6 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navigation
 import com.haeti.sopose.android.AndroidScreen
+import com.haeti.sopose.android.AndroidScreenViewModel
 import com.haeti.sopose.auth.AuthViewModel
 import com.haeti.sopose.home.HomeScreen
 import com.haeti.sopose.home.HomeViewModel
@@ -34,6 +35,7 @@ fun MainNavHost(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val homeViewModel: HomeViewModel = hiltViewModel()
+    val androidScreenViewModel: AndroidScreenViewModel = hiltViewModel()
 
     Scaffold(
         topBar = {
@@ -73,7 +75,12 @@ fun MainNavHost(
                 authViewModel = viewModel,
                 modifier = Modifier.padding(it)
             )
-            mainGraph(authViewModel = viewModel, homeViewModel = homeViewModel)
+            mainGraph(
+                authViewModel = viewModel,
+                homeViewModel = homeViewModel,
+                androidScreenViewModel = androidScreenViewModel,
+                modifier = Modifier.padding(it)
+            )
         }
     }
 
@@ -102,16 +109,21 @@ fun NavGraphBuilder.authGraph(
     }
 }
 
-fun NavGraphBuilder.mainGraph(authViewModel: AuthViewModel, homeViewModel: HomeViewModel) {
+fun NavGraphBuilder.mainGraph(
+    authViewModel: AuthViewModel,
+    homeViewModel: HomeViewModel,
+    androidScreenViewModel: AndroidScreenViewModel,
+    modifier: Modifier
+) {
     navigation(startDestination = BottomNavItem.Home.route, route = NavGraph.Main.route) {
         composable(BottomNavItem.Home.route) {
-            HomeScreen(homeViewModel)
+            HomeScreen(modifier, homeViewModel)
         }
         composable(BottomNavItem.MyPage.route) {
-            MypageScreen(authViewModel)
+            MypageScreen(modifier, authViewModel)
         }
         composable(BottomNavItem.Android.route) {
-            AndroidScreen()
+            AndroidScreen(modifier, androidScreenViewModel)
         }
     }
 }
