@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -29,12 +30,14 @@ import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun MypageScreen(
+    modifier: Modifier = Modifier,
     authViewModel: AuthViewModel
 ) {
     val authState by authViewModel.collectAsState()
 
     Column(
-        modifier = Modifier
+        modifier = modifier
+            .fillMaxSize()
             .padding(16.dp)
     ) {
         Row(

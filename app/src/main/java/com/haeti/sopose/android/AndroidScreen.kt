@@ -16,7 +16,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.haeti.sopose.common.components.LoadingScreen
 import com.haeti.sopose.common.components.PokemonProfile
 import com.haeti.sopose.common.extensions.VerticalSpacer
@@ -26,8 +25,11 @@ import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
-fun AndroidScreen() {
-    val viewModel: AndroidScreenViewModel = hiltViewModel()
+fun AndroidScreen(
+    modifier: Modifier = Modifier,
+    viewModel: AndroidScreenViewModel
+) {
+
     val state by viewModel.collectAsState()
     val context = LocalContext.current
 
@@ -38,7 +40,7 @@ fun AndroidScreen() {
 
         is UiState.Success -> {
             val pokemonList = uiState.data
-            PokemonContents(pokemonList = pokemonList)
+            PokemonContents(modifier = modifier, pokemonList = pokemonList)
         }
 
         is UiState.Failure -> {
@@ -58,10 +60,11 @@ fun AndroidScreen() {
 
 @Composable
 fun PokemonContents(
+    modifier: Modifier = Modifier,
     pokemonList: List<Pokemon>,
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally,
     ) {
         VerticalSpacer(height = 20.dp)

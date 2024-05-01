@@ -58,7 +58,10 @@ val friendTypeSaver: Saver<List<FriendType>, *> = Saver(
 
 
 @Composable
-fun HomeScreen(homeViewModel: HomeViewModel) {
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    homeViewModel: HomeViewModel
+) {
     val context = LocalContext.current
     val homeState by homeViewModel.collectAsState()
     val friendList = rememberSaveable(stateSaver = friendTypeSaver) {
@@ -97,7 +100,7 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
     }
 
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
     ) {
         item {
